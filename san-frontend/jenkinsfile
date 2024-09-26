@@ -1,0 +1,37 @@
+
+pipeline {
+    agent any
+    stages {
+        stage('Cloning Git') {
+            steps {
+                git branch: 'main', url: 'https://gitlab.com/software-developer2990419/san-project.git'
+            }
+        }
+        stage('Building image') {
+            steps {
+                script {
+                    // Go to the correct directory where Dockerfile is located
+                    dir('san-frontend') {
+                        bat 'docker build -t "ponsun/jenkins:3" .'
+                    }
+                }
+            }
+        }
+        stage('Running image') {
+            steps {
+                script {
+                    bat 'docker run -d -p 8082:80 ponsun/jenkins:3'
+                }
+            }
+        }
+        stage('Stop and Remove Container') {
+            steps {
+                script {
+                    bat 'docker stop $(docker ps -q --filter "ancestor=ponsun/jenkins:3")'
+                    bat 'docker rm $(docker ps -q --filter "ancestor=ponsun/jenkins:3")'
+                }
+            }
+        }
+    }
+}
+
