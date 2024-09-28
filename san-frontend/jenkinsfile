@@ -24,14 +24,14 @@ pipeline {
                 }
             }
         }
-        stage('Stop and Remove Container') {
-            steps {
-                script {
-                    bat 'docker stop $(docker ps -q --filter "ancestor=ponsun/jenkins:3")'
-                    bat 'docker rm $(docker ps -q --filter "ancestor=ponsun/jenkins:3")'
-                }
-            }
-        }
+        //stage('Stop and Remove Container') {
+            //steps {
+                //script {
+                    //bat 'docker stop $(docker ps -q --filter "ancestor=ponsun/jenkins:3")'
+                    //bat 'docker rm $(docker ps -q --filter "ancestor=ponsun/jenkins:3")'
+                //}
+            //}
+        //}
     }
 }
 
